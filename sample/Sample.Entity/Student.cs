@@ -23,6 +23,7 @@ public class Student
 
     public double Average { get; set; }
 
+    [Column(TypeName = "decimal(18,2)")]
     public decimal Bonus { get; set; }
 
     public DateTime Birthday { get; set; }

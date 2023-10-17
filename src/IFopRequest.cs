@@ -4,6 +4,7 @@ using Fop.Page;
 
 namespace Fop;
 
-public interface IFopRequest : IFilterRequest, IOrderRequest, IPageRequest
+public interface IFopRequest : IFilterRequest,IPageRequest
 {
+    IEnumerable<IOrderRequest> OrderList { get; set; }
 }

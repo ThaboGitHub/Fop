@@ -63,9 +63,10 @@ public static class Extensions
         }
 
         // Order
-        if (!string.IsNullOrEmpty(request.OrderBy))
+        if (request.OrderList != null && request.OrderList.Any())
         {
-            source = source.OrderBy(request.OrderBy + " " + request.Direction);
+                var ordering = string.Join(",", request.OrderList.Select(s => $"{s.OrderBy} {s.Direction}"));
+                source = source.OrderBy(ordering);
         }
 
         // Paging

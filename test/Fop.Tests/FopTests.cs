@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Fop.Exceptions;
 using Fop.Order;
@@ -49,9 +50,8 @@ public class FopTests
             },
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber),
-
+          
+            OrderList = new List<IOrderRequest>{new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
             // Page
             PageSize = 100,
             PageNumber = 1
@@ -97,8 +97,7 @@ public class FopTests
             },
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber),
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
 
             // Page
             PageSize = 100,
@@ -149,8 +148,7 @@ public class FopTests
 
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber)
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
         };
 
         // Act
@@ -189,8 +187,7 @@ public class FopTests
 
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber)
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
         };
 
         // Act
@@ -264,8 +261,7 @@ public class FopTests
 
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber)
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
         };
 
         // Act
@@ -317,8 +313,7 @@ public class FopTests
 
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber)
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
         };
 
         // Act
@@ -368,8 +363,7 @@ public class FopTests
 
 
             // Order
-            Direction = OrderDirection.Desc,
-            OrderBy = nameof(Student.IdentityNumber)
+            OrderList = new List<IOrderRequest> { new OrderRequest(nameof(Student.IdentityNumber), OrderDirection.Desc) },
         };
 
         // Act

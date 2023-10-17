@@ -18,9 +18,7 @@ public class FopExpressionBuilder<T>
 
         if (!string.IsNullOrEmpty(order))
         {
-            var (orderBy, direction) = OrderExpressionBuilder(order);
-            request.OrderBy = orderBy;
-            request.Direction = direction;
+            request.OrderList = OrderExpressionBuilder(order);
         }
 
         if (pageNumber > 0 && pageSize > 0)
@@ -32,19 +30,36 @@ public class FopExpressionBuilder<T>
         return request;
     }
 
-    private static (string, OrderDirection) OrderExpressionBuilder(string order)
+    private static IEnumerable<IOrderRequest> OrderExpressionBuilder(string order)
     {
+        var retVal =  new List<IOrderRequest>();
         order = order.ToLower();
 
-        var orderParts = order.Split(';');
+        var orderList = order.Split("$"); 
+        foreach (var orderItem in orderList) 
+        {
+            var orderParts = orderItem.Split(';'); 
 
-        var direction = orderParts.Length > 1 ?
-            orderParts[1] == "desc" 
-                ? OrderDirection.Desc 
-                : OrderDirection.Asc
-            : OrderDirection.Asc;
+            var direction = orderParts.Length > 1 ?
+                orderParts[1] == "desc"
+                    ? OrderDirection.Desc
+                    : OrderDirection.Asc
+                : OrderDirection.Asc;
 
-        return (orderParts[0], direction);
+            var fieldParts = orderParts[0].Split(',');
+
+            foreach (var fieldPart in fieldParts)
+            {
+                var trimmedField = fieldPart.Trim();
+                var indexOfFirstSpace = trimmedField.IndexOf(" ", StringComparison.InvariantCultureIgnoreCase);
+                var propertyName = indexOfFirstSpace == -1 ? trimmedField : trimmedField.Remove(indexOfFirstSpace);
+
+                retVal.Add(new OrderRequest(propertyName,direction));
+            }
+
+        }
+
+        return retVal;
     }
 
     private static IEnumerable<IFilterList> FilterExpressionBuilder(string filter)
